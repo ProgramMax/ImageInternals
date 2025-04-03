@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{f40c8281-9edf-43db-818e-396aa37ce77b}</ProjectGuid>
+    <RootNamespace>ImageInternals</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(ProjectDir)..\..\Dependencies\max\Code;$(ProjectDir)..\..\Dependencies\maxGUI\Code;$(ProjectDir)..\..\Dependencies\libpng;$(ProjectDir)..\..\Dependencies\zlib;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(ProjectDir)..\..\Dependencies\max\Code;$(ProjectDir)..\..\Dependencies\maxGUI\Code;$(ProjectDir)..\..\Dependencies\libpng;$(ProjectDir)..\..\Dependencies\zlib;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(ProjectDir)..\..\Dependencies\max\Code;$(ProjectDir)..\..\Dependencies\maxGUI\Code;$(ProjectDir)..\..\Dependencies\libpng;$(ProjectDir)..\..\Dependencies\zlib;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(ProjectDir)..\..\Dependencies\max\Code;$(ProjectDir)..\..\Dependencies\maxGUI\Code;$(ProjectDir)..\..\Dependencies\libpng;$(ProjectDir)..\..\Dependencies\zlib;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Dependencies\libpng\png.h" />
+    <ClInclude Include="..\..\Dependencies\libpng\pngconf.h" />
+    <ClInclude Include="..\..\Dependencies\libpng\pngdebug.h" />
+    <ClInclude Include="..\..\Dependencies\libpng\pnginfo.h" />
+    <ClInclude Include="..\..\Dependencies\libpng\pnglibconf.h" />
+    <ClInclude Include="..\..\Dependencies\libpng\pngpriv.h" />
+    <ClInclude Include="..\..\Dependencies\libpng\pngstruct.h" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\Button.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\ButtonImplementation.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\CheckBox.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\CheckBoxImplementation.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\Control.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\ControlImplementation.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\ControlWithList.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\ControlWithText.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\ControlWithTextImplementation.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\DropDownBox.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\DropDownBoxImplementation.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormAllocatorConcept.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormAllocatorModel.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormConcept.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormContainer.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormModel.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormStyles.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\Frame.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\Label.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\ListBox.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\ListBoxImplementation.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\maxGUI.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\maxGUIEntryPoint.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\Menu.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\MultilineTextBox.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\MultilineTextBoxImplementation.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\ProgressBar.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\RadioButton.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\RadioButtonImplementation.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\TextBox.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\TextBoxImplementation.hpp" />
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\Win32String.hpp" />
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\AliasingOptimizations.hpp" />
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Bitmask.hpp" />
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration.hpp" />
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration\Compiler.hpp" />
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration\Compiler\Clang.hpp" />
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration\Compiler\GCC.hpp" />
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration\Compiler\VC.hpp" />
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration\Platform.hpp" />
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration\Platform\Android.hpp" />
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration\Platform\Linux.hpp" />
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration\Platform\MacOS.hpp" />
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration\Platform\Win32.hpp" />
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration\StandardLibrary.hpp" />
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\CurrentVersionNamespace.hpp" />
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Exists.hpp" />
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Macros.hpp" />
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Containers\Point.hpp" />
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Containers\Rectangle.hpp" />
+    <ClInclude Include="..\..\Dependencies\zlib\crc32.h" />
+    <ClInclude Include="..\..\Dependencies\zlib\deflate.h" />
+    <ClInclude Include="..\..\Dependencies\zlib\gzguts.h" />
+    <ClInclude Include="..\..\Dependencies\zlib\inffast.h" />
+    <ClInclude Include="..\..\Dependencies\zlib\inffixed.h" />
+    <ClInclude Include="..\..\Dependencies\zlib\inflate.h" />
+    <ClInclude Include="..\..\Dependencies\zlib\inftrees.h" />
+    <ClInclude Include="..\..\Dependencies\zlib\trees.h" />
+    <ClInclude Include="..\..\Dependencies\zlib\zconf.h" />
+    <ClInclude Include="..\..\Dependencies\zlib\zlib.h" />
+    <ClInclude Include="..\..\Dependencies\zlib\zutil.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Dependencies\libpng\arm\filter_neon.S">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\..\Dependencies\libpng\AUTHORS" />
+    <None Include="..\..\Dependencies\libpng\LICENSE" />
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\Button.inl" />
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\CheckBox.inl" />
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\DropDownBox.inl" />
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormAllocatorModel.inl" />
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormContainer.inl" />
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormModel.inl" />
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\ListBox.inl" />
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\Menu.inl" />
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\MultilineTextBox.inl" />
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\RadioButton.inl" />
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\TextBox.inl" />
+    <None Include="..\..\Dependencies\max\Code\max\Containers\Point.inl" />
+    <None Include="..\..\Dependencies\max\Code\max\Containers\Rectangle.inl" />
+    <None Include="..\..\Dependencies\zlib\LICENSE" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Code\EntryPoint.cpp" />
+    <ClCompile Include="..\..\Dependencies\libpng\arm\arm_init.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\arm\filter_neon_intrinsics.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\arm\palette_neon_intrinsics.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\intel\filter_sse2_intrinsics.c" />
+    <ClCompile Include="..\..\Dependencies\libpng\intel\intel_init.c" />
+    <ClCompile Include="..\..\Dependencies\libpng\png.c" />
+    <ClCompile Include="..\..\Dependencies\libpng\pngerror.c" />
+    <ClCompile Include="..\..\Dependencies\libpng\pngget.c" />
+    <ClCompile Include="..\..\Dependencies\libpng\pngmem.c" />
+    <ClCompile Include="..\..\Dependencies\libpng\pngpread.c" />
+    <ClCompile Include="..\..\Dependencies\libpng\pngread.c">
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\pngrio.c" />
+    <ClCompile Include="..\..\Dependencies\libpng\pngrtran.c" />
+    <ClCompile Include="..\..\Dependencies\libpng\pngrutil.c" />
+    <ClCompile Include="..\..\Dependencies\libpng\pngset.c" />
+    <ClCompile Include="..\..\Dependencies\libpng\pngtrans.c" />
+    <ClCompile Include="..\..\Dependencies\libpng\pngwio.c" />
+    <ClCompile Include="..\..\Dependencies\libpng\pngwrite.c">
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\pngwtran.c" />
+    <ClCompile Include="..\..\Dependencies\libpng\pngwutil.c" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\Button.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\ButtonImplementation.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\CheckBoxImplementation.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\Control.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\ControlImplementation.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\ControlWithList.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\ControlWithText.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\ControlWithTextImplementation.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\DropDownBoxImplementation.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormAllocatorConcept.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormConcept.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormContainer.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\Frame.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\Label.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\ListBoxImplementation.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\maxGUIEntryPoint.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\Menu.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\MultilineTextBoxImplementation.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\ProgressBar.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\RadioButtonImplementation.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\TestingEntryPoint.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\TextBoxImplementation.cpp" />
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\Win32String.cpp" />
+    <ClCompile Include="..\..\Dependencies\zlib\adler32.c" />
+    <ClCompile Include="..\..\Dependencies\zlib\compress.c" />
+    <ClCompile Include="..\..\Dependencies\zlib\crc32.c" />
+    <ClCompile Include="..\..\Dependencies\zlib\deflate.c" />
+    <ClCompile Include="..\..\Dependencies\zlib\gzclose.c" />
+    <ClCompile Include="..\..\Dependencies\zlib\gzlib.c" />
+    <ClCompile Include="..\..\Dependencies\zlib\gzread.c" />
+    <ClCompile Include="..\..\Dependencies\zlib\gzwrite.c" />
+    <ClCompile Include="..\..\Dependencies\zlib\infback.c" />
+    <ClCompile Include="..\..\Dependencies\zlib\inffast.c" />
+    <ClCompile Include="..\..\Dependencies\zlib\inflate.c" />
+    <ClCompile Include="..\..\Dependencies\zlib\inftrees.c" />
+    <ClCompile Include="..\..\Dependencies\zlib\trees.c" />
+    <ClCompile Include="..\..\Dependencies\zlib\uncompr.c" />
+    <ClCompile Include="..\..\Dependencies\zlib\zutil.c" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

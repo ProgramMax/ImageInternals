@@ -1,0 +1,482 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Dependencies">
+      <UniqueIdentifier>{f552818e-e054-4b2e-bd65-b467b072440a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\max">
+      <UniqueIdentifier>{c8b5f15c-a457-4f57-8104-72305be451f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\max\Compiling">
+      <UniqueIdentifier>{18b23b5e-d615-4716-8642-32d7077288ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\max\Containers">
+      <UniqueIdentifier>{49485058-6c38-44a6-90b9-4c1a3b188af8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\max\Compiling\Configuration">
+      <UniqueIdentifier>{f137ab95-774d-4df9-a677-86d9f9f66bd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\max\Compiling\Configuration\Compiler">
+      <UniqueIdentifier>{0d4d8e4e-d240-48bd-9491-574b8c8017dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\max\Compiling\Configuration\Platform">
+      <UniqueIdentifier>{2f7c3671-c767-4acd-82fc-c0f579a98365}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code">
+      <UniqueIdentifier>{89bfcb7e-eab0-49da-954a-df94a3b459e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\maxGUI">
+      <UniqueIdentifier>{14cb97a4-3048-4e94-b186-871910e3818f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\libpng">
+      <UniqueIdentifier>{874a671f-1e22-455b-b52b-f8ac3a5b5c12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\libpng\arm">
+      <UniqueIdentifier>{d6f17c28-3b5a-48c3-b0ae-8b77a15ad20d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\libpng\intel">
+      <UniqueIdentifier>{b6ced5ca-54ae-47d3-9b9c-e36c3d17f037}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\zlib">
+      <UniqueIdentifier>{2c3a22df-34b6-4831-bf0f-40c6554d16e0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Containers\Point.hpp">
+      <Filter>Dependencies\max\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Containers\Rectangle.hpp">
+      <Filter>Dependencies\max\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\AliasingOptimizations.hpp">
+      <Filter>Dependencies\max\Compiling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Bitmask.hpp">
+      <Filter>Dependencies\max\Compiling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration.hpp">
+      <Filter>Dependencies\max\Compiling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\CurrentVersionNamespace.hpp">
+      <Filter>Dependencies\max\Compiling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Exists.hpp">
+      <Filter>Dependencies\max\Compiling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Macros.hpp">
+      <Filter>Dependencies\max\Compiling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration\Compiler.hpp">
+      <Filter>Dependencies\max\Compiling\Configuration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration\Platform.hpp">
+      <Filter>Dependencies\max\Compiling\Configuration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration\StandardLibrary.hpp">
+      <Filter>Dependencies\max\Compiling\Configuration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration\Compiler\Clang.hpp">
+      <Filter>Dependencies\max\Compiling\Configuration\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration\Compiler\GCC.hpp">
+      <Filter>Dependencies\max\Compiling\Configuration\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration\Compiler\VC.hpp">
+      <Filter>Dependencies\max\Compiling\Configuration\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration\Platform\Android.hpp">
+      <Filter>Dependencies\max\Compiling\Configuration\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration\Platform\Linux.hpp">
+      <Filter>Dependencies\max\Compiling\Configuration\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration\Platform\MacOS.hpp">
+      <Filter>Dependencies\max\Compiling\Configuration\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\max\Code\max\Compiling\Configuration\Platform\Win32.hpp">
+      <Filter>Dependencies\max\Compiling\Configuration\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\Button.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\ButtonImplementation.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\CheckBox.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\CheckBoxImplementation.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\Control.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\ControlImplementation.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\ControlWithList.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\ControlWithText.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\ControlWithTextImplementation.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\DropDownBox.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\DropDownBoxImplementation.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormAllocatorConcept.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormAllocatorModel.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormConcept.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormContainer.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormModel.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormStyles.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\Frame.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\Label.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\ListBox.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\ListBoxImplementation.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\maxGUI.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\maxGUIEntryPoint.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\Menu.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\MultilineTextBox.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\MultilineTextBoxImplementation.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\ProgressBar.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\RadioButton.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\RadioButtonImplementation.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\TextBox.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\TextBoxImplementation.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\maxGUI\Code\maxGUI\Win32String.hpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\libpng\png.h">
+      <Filter>Dependencies\libpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\libpng\pngconf.h">
+      <Filter>Dependencies\libpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\libpng\pngdebug.h">
+      <Filter>Dependencies\libpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\libpng\pnginfo.h">
+      <Filter>Dependencies\libpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\libpng\pngpriv.h">
+      <Filter>Dependencies\libpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\libpng\pngstruct.h">
+      <Filter>Dependencies\libpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\libpng\pnglibconf.h">
+      <Filter>Dependencies\libpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\zlib\crc32.h">
+      <Filter>Dependencies\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\zlib\deflate.h">
+      <Filter>Dependencies\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\zlib\gzguts.h">
+      <Filter>Dependencies\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\zlib\inffast.h">
+      <Filter>Dependencies\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\zlib\inffixed.h">
+      <Filter>Dependencies\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\zlib\inflate.h">
+      <Filter>Dependencies\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\zlib\inftrees.h">
+      <Filter>Dependencies\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\zlib\trees.h">
+      <Filter>Dependencies\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\zlib\zconf.h">
+      <Filter>Dependencies\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\zlib\zlib.h">
+      <Filter>Dependencies\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\zlib\zutil.h">
+      <Filter>Dependencies\zlib</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Dependencies\max\Code\max\Containers\Point.inl">
+      <Filter>Dependencies\max\Containers</Filter>
+    </None>
+    <None Include="..\..\Dependencies\max\Code\max\Containers\Rectangle.inl">
+      <Filter>Dependencies\max\Containers</Filter>
+    </None>
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\Button.inl">
+      <Filter>Dependencies\maxGUI</Filter>
+    </None>
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\CheckBox.inl">
+      <Filter>Dependencies\maxGUI</Filter>
+    </None>
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\DropDownBox.inl">
+      <Filter>Dependencies\maxGUI</Filter>
+    </None>
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormAllocatorModel.inl">
+      <Filter>Dependencies\maxGUI</Filter>
+    </None>
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormContainer.inl">
+      <Filter>Dependencies\maxGUI</Filter>
+    </None>
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormModel.inl">
+      <Filter>Dependencies\maxGUI</Filter>
+    </None>
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\ListBox.inl">
+      <Filter>Dependencies\maxGUI</Filter>
+    </None>
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\Menu.inl">
+      <Filter>Dependencies\maxGUI</Filter>
+    </None>
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\MultilineTextBox.inl">
+      <Filter>Dependencies\maxGUI</Filter>
+    </None>
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\RadioButton.inl">
+      <Filter>Dependencies\maxGUI</Filter>
+    </None>
+    <None Include="..\..\Dependencies\maxGUI\Code\maxGUI\TextBox.inl">
+      <Filter>Dependencies\maxGUI</Filter>
+    </None>
+    <None Include="..\..\Dependencies\libpng\arm\filter_neon.S">
+      <Filter>Dependencies\libpng\arm</Filter>
+    </None>
+    <None Include="..\..\Dependencies\libpng\AUTHORS">
+      <Filter>Dependencies\libpng</Filter>
+    </None>
+    <None Include="..\..\Dependencies\libpng\LICENSE">
+      <Filter>Dependencies\libpng</Filter>
+    </None>
+    <None Include="..\..\Dependencies\zlib\LICENSE">
+      <Filter>Dependencies\zlib</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Code\EntryPoint.cpp">
+      <Filter>Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\Button.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\ButtonImplementation.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\CheckBoxImplementation.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\Control.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\ControlImplementation.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\ControlWithList.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\ControlWithText.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\ControlWithTextImplementation.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\DropDownBoxImplementation.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormAllocatorConcept.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormConcept.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\FormContainer.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\Frame.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\Label.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\ListBoxImplementation.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\maxGUIEntryPoint.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\Menu.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\MultilineTextBoxImplementation.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\ProgressBar.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\RadioButtonImplementation.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\TestingEntryPoint.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\TextBoxImplementation.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\maxGUI\Code\maxGUI\Win32String.cpp">
+      <Filter>Dependencies\maxGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\arm\arm_init.c">
+      <Filter>Dependencies\libpng\arm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\arm\filter_neon_intrinsics.c">
+      <Filter>Dependencies\libpng\arm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\arm\palette_neon_intrinsics.c">
+      <Filter>Dependencies\libpng\arm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\intel\filter_sse2_intrinsics.c">
+      <Filter>Dependencies\libpng\intel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\intel\intel_init.c">
+      <Filter>Dependencies\libpng\intel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\png.c">
+      <Filter>Dependencies\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\pngerror.c">
+      <Filter>Dependencies\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\pngget.c">
+      <Filter>Dependencies\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\pngmem.c">
+      <Filter>Dependencies\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\pngpread.c">
+      <Filter>Dependencies\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\pngread.c">
+      <Filter>Dependencies\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\pngrio.c">
+      <Filter>Dependencies\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\pngrtran.c">
+      <Filter>Dependencies\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\pngrutil.c">
+      <Filter>Dependencies\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\pngset.c">
+      <Filter>Dependencies\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\pngtrans.c">
+      <Filter>Dependencies\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\pngwio.c">
+      <Filter>Dependencies\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\pngwrite.c">
+      <Filter>Dependencies\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\pngwtran.c">
+      <Filter>Dependencies\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\libpng\pngwutil.c">
+      <Filter>Dependencies\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\zlib\adler32.c">
+      <Filter>Dependencies\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\zlib\compress.c">
+      <Filter>Dependencies\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\zlib\crc32.c">
+      <Filter>Dependencies\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\zlib\deflate.c">
+      <Filter>Dependencies\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\zlib\gzclose.c">
+      <Filter>Dependencies\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\zlib\gzlib.c">
+      <Filter>Dependencies\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\zlib\gzread.c">
+      <Filter>Dependencies\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\zlib\gzwrite.c">
+      <Filter>Dependencies\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\zlib\infback.c">
+      <Filter>Dependencies\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\zlib\inffast.c">
+      <Filter>Dependencies\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\zlib\inflate.c">
+      <Filter>Dependencies\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\zlib\inftrees.c">
+      <Filter>Dependencies\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\zlib\trees.c">
+      <Filter>Dependencies\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\zlib\uncompr.c">
+      <Filter>Dependencies\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\zlib\zutil.c">
+      <Filter>Dependencies\zlib</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
