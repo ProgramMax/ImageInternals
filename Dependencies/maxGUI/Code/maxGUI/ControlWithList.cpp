@@ -15,7 +15,4 @@ namespace maxGUI
 	{}
 #endif
 
-	void ControlWithList::OnSelectionChanged(int /*newly_selected_index*/) noexcept
-	{}
-
 } // namespace maxGUI

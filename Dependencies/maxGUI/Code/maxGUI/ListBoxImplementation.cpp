@@ -23,7 +23,7 @@ namespace maxGUI
 
 #if defined(MAX_PLATFORM_WINDOWS)
 	HWND ListBoxImplementation::Create(HWND parent_window_handle, max::Containers::Rectangle<int, int> rectangle, std::vector<std::string> list, ListBoxStyles styles) noexcept {
-		DWORD win32_styles = WS_CHILD | WS_VISIBLE | WS_TABSTOP | LBS_STANDARD;
+		DWORD win32_styles = WS_CHILD | WS_VISIBLE | WS_TABSTOP | LBS_NOTIFY | WS_VSCROLL | WS_BORDER;
 		// MSVC at warning level 4 issues C26813 because it wants "if (styles & ButtonStyles::Default) {"
 		// But this doesn't play nicely with enum classes because ultimately it needs to convert to bool.
 		// See https://developercommunity.visualstudio.com/t/C26813-incompatible-with-enum-class/10145182
@@ -49,5 +49,14 @@ namespace maxGUI
 		return window_handle;
 	}
 #endif
+
+	void ListBoxImplementation::AddItem(const std::string& text) noexcept {
+		Win32String win32_text = Utf8ToWin32String(text);
+		SendMessage(window_handle_, LB_ADDSTRING, 0, reinterpret_cast<LPARAM>(win32_text.text_));
+	}
+
+	void ListBoxImplementation::Clear() noexcept {
+		SendMessage(window_handle_, LB_RESETCONTENT, 0, 0);
+	}
 
 } // namespace maxGUI

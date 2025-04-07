@@ -52,6 +52,9 @@ namespace maxGUI
 		static HWND Create(HWND parent_window_handle, max::Containers::Rectangle<int, int> rectangle, std::vector<std::string> list, ListBoxStyles styles) noexcept;
 #endif
 
+		void AddItem(const std::string& text) noexcept;
+		void Clear() noexcept;
+
 	};
 
 } // namespace maxGUI

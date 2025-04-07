@@ -23,6 +23,16 @@ namespace maxGUI
 	}
 
 	template< class Behavior >
+	void ListBox< Behavior >::AddItem(const std::string& text) noexcept {
+		implementation_.AddItem(text);
+	}
+
+	template< class Behavior >
+	void ListBox< Behavior >::Clear() noexcept {
+		implementation_.Clear();
+	}
+
+	template< class Behavior >
 	void ListBox< Behavior >::OnCommand(WORD notification) noexcept {
 		if constexpr (HasOnGainedFocus< Behavior >::value) {
 			if (notification == LBN_SETFOCUS ) {
@@ -36,10 +46,12 @@ namespace maxGUI
 			}
 		}
 
-		if (notification == LBN_SELCHANGE)
-		{
-			int index = static_cast<int>(SendMessage(window_handle_, LB_GETCURSEL, 0, 0));
-			OnSelectionChanged(index);
+		if constexpr (HasOnSelectionChanged< Behavior >::value) {
+			if (notification == LBN_SELCHANGE)
+			{
+				int index = static_cast<int>(SendMessage(window_handle_, LB_GETCURSEL, 0, 0));
+				behavior_.OnSelectionChanged(index);
+			}
 		}
 	}
 

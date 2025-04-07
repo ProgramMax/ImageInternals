@@ -33,7 +33,10 @@ namespace maxGUI
 
 		static HWND Create(HWND parent_window_handle, max::Containers::Rectangle<int, int> rectangle, std::vector<std::string> list, ListBoxStyles styles = ListBoxStyles::None) noexcept;
 
-	//protected:
+		void AddItem(const std::string& text) noexcept;
+		void Clear() noexcept;
+
+		//protected:
 
 		void OnCommand(WORD notification) noexcept override;
 

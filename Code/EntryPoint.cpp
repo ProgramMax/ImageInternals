@@ -10,6 +10,11 @@
 #include <Windows.h>
 #include <commdlg.h>
 
+#include <expected>
+#include <fstream>
+#include <vector>
+#include <span>
+
 #include <maxGUI/maxGUI.hpp>
 
 #include <png.h>
@@ -19,7 +24,210 @@ namespace {
 	int width;
 	int height;
 	HWND window_handle;
+	maxGUI::FormConcept* form_ = nullptr;
+	std::vector<char> file_contents;
+	std::vector<size_t> chunk_indices;
+	bool show_picture = true;
+	maxGUI::Frame* ihdr_frame = nullptr;
+	maxGUI::Label* width_label = nullptr;
+	maxGUI::TextBox<>* width_textbox = nullptr;
+	maxGUI::Label* height_label = nullptr;
+	maxGUI::TextBox<>* height_textbox = nullptr;
+	maxGUI::Label* bit_depth_label = nullptr;
+	maxGUI::TextBox<>* bit_depth_textbox = nullptr;
+	maxGUI::Label* color_type_label = nullptr;
+	maxGUI::TextBox<>* color_type_textbox = nullptr;
+	maxGUI::Label* compression_method_label = nullptr;
+	maxGUI::TextBox<>* compression_method_textbox = nullptr;
+	maxGUI::Label* filter_method_label = nullptr;
+	maxGUI::TextBox<>* filter_method_textbox = nullptr;
+	maxGUI::Label* interlace_method_label = nullptr;
+	maxGUI::TextBox<>* interlace_method_textbox = nullptr;
 
+
+	void DisplaySelectedChunk(size_t chunk_index) noexcept;
+
+	void HideEverything() noexcept {
+		show_picture = false;
+		ShowWindow(ihdr_frame->window_handle_, SW_HIDE);
+		ShowWindow(width_label->window_handle_, SW_HIDE);
+		ShowWindow(width_textbox->window_handle_, SW_HIDE);
+		ShowWindow(height_label->window_handle_, SW_HIDE);
+		ShowWindow(height_textbox->window_handle_, SW_HIDE);
+		ShowWindow(bit_depth_label->window_handle_, SW_HIDE);
+		ShowWindow(bit_depth_textbox->window_handle_, SW_HIDE);
+		ShowWindow(color_type_label->window_handle_, SW_HIDE);
+		ShowWindow(color_type_textbox->window_handle_, SW_HIDE);
+		ShowWindow(compression_method_label->window_handle_, SW_HIDE);
+		ShowWindow(compression_method_textbox->window_handle_, SW_HIDE);
+		ShowWindow(filter_method_label->window_handle_, SW_HIDE);
+		ShowWindow(filter_method_textbox->window_handle_, SW_HIDE);
+		ShowWindow(interlace_method_label->window_handle_, SW_HIDE);
+		ShowWindow(interlace_method_textbox->window_handle_, SW_HIDE);
+	}
+
+	struct PNGChunksListboxBehavior {
+
+
+		static void OnSelectionChanged(int newly_selected_index) noexcept {
+			// hide everything first
+			HideEverything();
+
+			// then selectively show the right thing
+			if (newly_selected_index == 0) {
+				show_picture = true;
+				InvalidateRect(window_handle, nullptr, TRUE);
+				return;
+			}
+
+			// Subtract 1 because the first selection is the picture
+			size_t chunk_index = chunk_indices[newly_selected_index - 1];
+			DisplaySelectedChunk(chunk_index);
+			InvalidateRect(window_handle, nullptr, TRUE);
+		}
+	};
+
+	maxGUI::ListBox<PNGChunksListboxBehavior>* listbox_ = nullptr;
+
+
+	static const std::string_view png_header = "\x89PNG\x0d\x0a\x1a\x0a";
+
+	constexpr uint32_t read_32_bits(const std::span<char>& file_contents, size_t index) noexcept {
+		uint8_t first_byte  = file_contents[index + 0];
+		uint8_t second_byte = file_contents[index + 1];
+		uint8_t third_byte  = file_contents[index + 2];
+		uint8_t fourth_byte = file_contents[index + 3];
+
+		// PNGs are little endian
+		// TODO: Make sure the target device is also little endian for this to work
+		uint32_t combined_bytes = first_byte  << 24 |
+			second_byte << 16 |
+			third_byte  << 8  |
+			fourth_byte << 0;
+		return combined_bytes;
+	}
+
+	enum class GetChunkIndicesErrorCode {
+		NotAPNGFile,
+	};
+	std::expected<std::vector<size_t>, GetChunkIndicesErrorCode> get_chunk_indices(const std::span<char>& file_contents) noexcept {
+		if (png_header.compare(file_contents.data()) != 0) {
+			return std::unexpected{ GetChunkIndicesErrorCode::NotAPNGFile };
+		}
+
+		std::vector<size_t> chunk_indices;
+		size_t current_index = 8; // 8 comes from the the PNG header
+		while (current_index < file_contents.size()) {
+			chunk_indices.push_back(current_index);
+
+
+			uint32_t chunk_length = read_32_bits(file_contents, current_index);
+			// TODO: Check that chunk_length + 12 doesn't overflow
+			current_index += chunk_length + 12; // 12 comes from the chunk length, type, and crc data
+		}
+
+		return chunk_indices;
+	}
+
+	enum class ReadFileErrorCode {
+		CannotOpenFile,
+		CannotReadFile,
+	};
+	std::expected<std::vector<char>, ReadFileErrorCode> read_file(const std::string& file_path) noexcept {
+		auto file = std::ifstream{ file_path.c_str(), std::ios::binary | std::ios::ate };
+		if (!file.good()) {
+			return std::unexpected{ ReadFileErrorCode::CannotOpenFile };
+		}
+		auto file_size = file.tellg();
+		file.seekg(0, std::ios::beg);
+
+		auto buffer = std::vector<char>( file_size );
+		if (!file.read(buffer.data(), file_size))
+		{
+			return std::unexpected{ ReadFileErrorCode::CannotReadFile };
+		}
+
+		file.close();
+
+		return buffer;
+	}
+
+
+	struct IHDRContent {
+		uint32_t width_;
+		uint32_t height_;
+		uint8_t bit_depth_;
+		uint8_t color_type_;
+		/*
+		* 0 - Grayscale (1, 2, 4, 8, 16 bits)
+		* 2 - Truecolor (8, 16 bits)
+		* 3 - Indexed-color (1, 2, 4, 8 bits)
+		* 4 - Grayscale w/ alpha (8, 16 bits)
+		* 6 - Truecolor w/ alpha (8, 16 bits)
+		*/
+		uint8_t compression_method_;
+		uint8_t filter_method_;
+		uint8_t interlace_method_;
+	};
+	IHDRContent ReadIHDR(const std::span<char>& file_contents, const size_t chunk_index) noexcept {
+		static constinit auto ihdr_size = uint32_t{ 13 }; // not including chunk header or crc
+		if (read_32_bits(file_contents, chunk_index) != ihdr_size) {
+			throw;
+		}
+
+		auto ihdr = IHDRContent{};
+		ihdr.width_ = read_32_bits(file_contents, chunk_index + 8);
+		ihdr.height_ = read_32_bits(file_contents, chunk_index + 12);
+		ihdr.bit_depth_ = file_contents[chunk_index + 16];
+		ihdr.color_type_ = file_contents[chunk_index + 17];
+		ihdr.compression_method_ = file_contents[chunk_index + 18];
+		ihdr.filter_method_ = file_contents[chunk_index + 19];
+		ihdr.interlace_method_ = file_contents[chunk_index + 20];
+
+		return ihdr;
+	}
+
+	void DisplayIHDR(size_t chunk_index) noexcept {
+		auto ihdr = ReadIHDR(file_contents, chunk_index);
+
+		width_textbox->SetText(std::to_string(ihdr.width_));
+		height_textbox->SetText(std::to_string(ihdr.height_));
+		bit_depth_textbox->SetText(std::to_string(ihdr.bit_depth_));
+		color_type_textbox->SetText(std::to_string(ihdr.color_type_));
+		compression_method_textbox->SetText(std::to_string(ihdr.compression_method_));
+		filter_method_textbox->SetText(std::to_string(ihdr.filter_method_));
+		interlace_method_textbox->SetText(std::to_string(ihdr.interlace_method_));
+
+		ShowWindow(ihdr_frame->window_handle_, SW_SHOW);
+		ShowWindow(width_label->window_handle_, SW_SHOW);
+		ShowWindow(width_textbox->window_handle_, SW_SHOW);
+		ShowWindow(height_label->window_handle_, SW_SHOW);
+		ShowWindow(height_textbox->window_handle_, SW_SHOW);
+		ShowWindow(bit_depth_label->window_handle_, SW_SHOW);
+		ShowWindow(bit_depth_textbox->window_handle_, SW_SHOW);
+		ShowWindow(color_type_label->window_handle_, SW_SHOW);
+		ShowWindow(color_type_textbox->window_handle_, SW_SHOW);
+		ShowWindow(compression_method_label->window_handle_, SW_SHOW);
+		ShowWindow(compression_method_textbox->window_handle_, SW_SHOW);
+		ShowWindow(filter_method_label->window_handle_, SW_SHOW);
+		ShowWindow(filter_method_textbox->window_handle_, SW_SHOW);
+		ShowWindow(interlace_method_label->window_handle_, SW_SHOW);
+		ShowWindow(interlace_method_textbox->window_handle_, SW_SHOW);
+	}
+
+	void DisplaySelectedChunk(size_t chunk_index) noexcept {
+		char first_char  = file_contents[chunk_index + 4];
+		char second_char = file_contents[chunk_index + 5];
+		char third_char  = file_contents[chunk_index + 6];
+		char fourth_char = file_contents[chunk_index + 7];
+
+		if (first_char  == 'I' &&
+		    second_char == 'H' &&
+		    third_char  == 'D' &&
+		    fourth_char == 'R') {
+			DisplayIHDR(chunk_index);
+		}
+	}
 
 	void SetImageFromBuffer(HWND window_handle, uint8_t* buffer, int buffer_size, int width, int height) {
 		constexpr int color_planes = 1;
@@ -136,7 +344,52 @@ struct OpenMenuBehavior {
 		// TODO: Make sure we don't overflow the int cast.
 		WideCharToMultiByte(CP_UTF8, 0, ofn.lpstrFile, char_count, &utf8_string[0], utf8_char_count, nullptr, nullptr);
 
+		auto read_file_result = read_file(utf8_string);
+		if (!read_file_result.has_value()) {
+			/*
+			switch (read_file_result.error()) {
+			case ReadFileErrorCode::CannotOpenFile:
+			case ReadFileErrorCode::CannotReadFile:
+			}
+			*/
+			return;
+		}
+
+		file_contents = std::move(read_file_result.value());
+
+		auto get_chunk_indices_result = get_chunk_indices(file_contents);
+		if (!get_chunk_indices_result.has_value()) {
+			/*
+			switch (get_chunk_indices_result.error()) {
+			case GetChunkIndicesErrorCode::NotAPNGFile:
+			}
+			*/
+			return;
+		}
+
+		listbox_->Clear();
+		listbox_->AddItem("Image");
+		chunk_indices = std::move(get_chunk_indices_result.value());
+		for (const auto& chunk_index : chunk_indices) {
+			char first_char  = file_contents[chunk_index + 4];
+			char second_char = file_contents[chunk_index + 5];
+			char third_char  = file_contents[chunk_index + 6];
+			char fourth_char = file_contents[chunk_index + 7];
+			/*auto text = std::string{1, first_char};
+			text += second_char;
+			text += third_char;
+			text += fourth_char;
+			*/
+			auto text = std::string{first_char, second_char, third_char, fourth_char};
+			listbox_->AddItem(text);
+		}
+
 		ReadPNG(utf8_string.c_str());
+
+		HideEverything();
+		show_picture = true;
+
+		InvalidateRect(window_handle, nullptr, TRUE);
 	}
 };
 
@@ -174,59 +427,57 @@ struct AboutMenuBehavior {
 	}
 };
 
+
+
+
 struct MainForm {
-
-	void CreateBuffer(HWND window_handle) {
-		// Each scan line in the buffer must be word aligned.
-		width = 60;
-		height = 60;
-		constexpr int color_planes = 1;
-		constexpr int bits_per_pixel = 32;
-		const int buffer_size = (((width * color_planes * bits_per_pixel + 15) >> 4) << 1) * height;
-
-		//auto buffer = std::make_unique<uint8_t[]>(buffer_size);
-		auto buffer = std::vector<uint8_t>(buffer_size);
-
-		// Fill in the buffer
-		constexpr int circle_center_y = 30;
-		constexpr int circle_center_x = 30;
-		constexpr double radius = 30.0;
-
-		for (int y = 0; y < height; y++) {
-			int y_distance = abs(circle_center_y - y);
-
-			for (int x = 0; x < width; x++) {
-				int x_distance = abs(circle_center_x - x);
-
-				double distance_from_pixel_to_circle_center = sqrt(static_cast<double>(x_distance) * x_distance + static_cast<double>(y_distance) * y_distance);
-
-				size_t i = ((y * width) + x) * 4;
-				if (distance_from_pixel_to_circle_center < radius) {
-					buffer[i+0] = 0x0; // blue channel
-					buffer[i+1] = 0x0; // green channel
-					buffer[i+2] = 0xff; // red channel
-				} else {
-					buffer[i+0] = 0; // blue channel
-					buffer[i+1] = 0; // green channel
-					buffer[i+2] = 0; // red channel
-
-				}
-				buffer[i+3] = 0; // unused channel
-			}
-		}
-
-		SetImageFromBuffer(window_handle, buffer.data(), buffer_size, width, height);
-	}
+	static const int initial_form_width = 800;
+	static const int initial_form_height = 600;
+	static const int component_width = 200;
+	int form_height;
+	int form_width;
 
 	void OnCreated(maxGUI::FormConcept* form) noexcept {
+		form_ = form;
 		window_handle = form->window_handle_;
 
-		std::vector<std::string> listbox_options{"Item 1", "Item 2", "Item 3"};
-		listbox_ = form->AddControl<maxGUI::ListBox<>>(max::Containers::MakeRectangle(25, 275, 300, 150), std::move(listbox_options));
+		std::vector<std::string> listbox_options{};
+		listbox_ = form->AddControl<maxGUI::ListBox<PNGChunksListboxBehavior>>(max::Containers::MakeRectangle(initial_form_width - component_width, 275, 200, 150), std::move(listbox_options));
 
-		form->AddControl<maxGUI::Frame>(max::Containers::MakeRectangle(25, 150, 300, 50), "Frame");
+		// IHDR content
+		ihdr_frame                 = form->AddControl<maxGUI::Frame>(max::Containers::MakeRectangle(25, 25, initial_form_width - component_width, initial_form_height), "IHDR");
+		width_label                = form->AddControl<maxGUI::Label>    (max::Containers::MakeRectangle( 50,  50, 125, 25), "Width:");
+		width_textbox              = form->AddControl<maxGUI::TextBox<>>(max::Containers::MakeRectangle(200,  50,  50, 25), "");
+		height_label               = form->AddControl<maxGUI::Label>    (max::Containers::MakeRectangle( 50,  75, 125, 25), "Height:");
+		height_textbox             = form->AddControl<maxGUI::TextBox<>>(max::Containers::MakeRectangle(200,  75,  50, 25), "");
+		bit_depth_label            = form->AddControl<maxGUI::Label>    (max::Containers::MakeRectangle( 50, 100, 125, 25), "Bit depth:");
+		bit_depth_textbox          = form->AddControl<maxGUI::TextBox<>>(max::Containers::MakeRectangle(200, 100,  50, 25), "");
+		color_type_label           = form->AddControl<maxGUI::Label>    (max::Containers::MakeRectangle( 50, 125, 125, 25), "Color type:");
+		color_type_textbox         = form->AddControl<maxGUI::TextBox<>>(max::Containers::MakeRectangle(200, 125,  50, 25), "");
+		compression_method_label   = form->AddControl<maxGUI::Label>    (max::Containers::MakeRectangle( 50, 150, 125, 25), "Compression method:");
+		compression_method_textbox = form->AddControl<maxGUI::TextBox<>>(max::Containers::MakeRectangle(200, 150,  50, 25), "");
+		filter_method_label        = form->AddControl<maxGUI::Label>    (max::Containers::MakeRectangle( 50, 175, 125, 25), "Filter method:");
+		filter_method_textbox      = form->AddControl<maxGUI::TextBox<>>(max::Containers::MakeRectangle(200, 175,  50, 25), "");
+		interlace_method_label     = form->AddControl<maxGUI::Label>    (max::Containers::MakeRectangle( 50, 200, 125, 25), "Interlace method:");
+		interlace_method_textbox   = form->AddControl<maxGUI::TextBox<>>(max::Containers::MakeRectangle(200, 200,  50, 25), "");
 
-		CreateBuffer(form->window_handle_);
+		ShowWindow(ihdr_frame->window_handle_, SW_HIDE);
+		ShowWindow(width_label->window_handle_, SW_HIDE);
+		ShowWindow(width_textbox->window_handle_, SW_HIDE);
+		ShowWindow(height_label->window_handle_, SW_HIDE);
+		ShowWindow(height_textbox->window_handle_, SW_HIDE);
+		ShowWindow(bit_depth_label->window_handle_, SW_HIDE);
+		ShowWindow(bit_depth_textbox->window_handle_, SW_HIDE);
+		ShowWindow(color_type_label->window_handle_, SW_HIDE);
+		ShowWindow(color_type_textbox->window_handle_, SW_HIDE);
+		ShowWindow(compression_method_label->window_handle_, SW_HIDE);
+		ShowWindow(compression_method_textbox->window_handle_, SW_HIDE);
+		ShowWindow(filter_method_label->window_handle_, SW_HIDE);
+		ShowWindow(filter_method_textbox->window_handle_, SW_HIDE);
+		ShowWindow(interlace_method_label->window_handle_, SW_HIDE);
+		ShowWindow(interlace_method_textbox->window_handle_, SW_HIDE);
+
+
 		auto file_menu = form->AppendMenu<maxGUI::ParentMenu>("&File");
 		file_menu->AppendMenu<maxGUI::PressableMenu<OpenMenuBehavior>>("&Open...");
 		file_menu->AppendMenu<maxGUI::PressableMenu<SaveMenuBehavior>>("&Save as...");
@@ -242,11 +493,22 @@ struct MainForm {
 			PAINTSTRUCT paint_info;
 			HDC device_context = BeginPaint(form->window_handle_, &paint_info);
 
-			HDC memory_dc = CreateCompatibleDC(device_context);
-			HGDIOBJ old_bitmap_handle = SelectObject(memory_dc, image);
-			BitBlt(device_context, 400, 45, width, height, memory_dc, 0, 0, SRCCOPY);
-			SelectObject(device_context, old_bitmap_handle);
-			DeleteObject(memory_dc);
+			if (show_picture && image != (HBITMAP)INVALID_HANDLE_VALUE) {
+				HDC memory_dc = CreateCompatibleDC(device_context);
+				HGDIOBJ old_bitmap_handle = SelectObject(memory_dc, image);
+
+				int top = (form_height - height) / 2;
+				if (top < 0) {
+					top = 0;
+				}
+				int left = ((form_width - component_width) - width) / 2;
+				if (left < 0) {
+					left = 0;
+				}
+				BitBlt(device_context, left, top, width, height, memory_dc, 0, 0, SRCCOPY);
+				SelectObject(device_context, old_bitmap_handle);
+				DeleteObject(memory_dc);
+			}
 
 			EndPaint(form->window_handle_, &paint_info);
 		}
@@ -257,7 +519,21 @@ struct MainForm {
 	}
 
 	void OnResized(maxGUI::FormConcept* /*form*/, int new_width, int new_height) noexcept {
-		listbox_->Move(max::Containers::MakeRectangle(0, 0, 300, new_height));
+		form_width = new_width;
+		form_height = new_height;
+		// Repaint the image in the new center
+		InvalidateRect(window_handle, nullptr, FALSE);
+
+		listbox_->Move(max::Containers::MakeRectangle(new_width - component_width, 0, component_width, new_height));
+		int ihdr_frame_width = new_width - component_width - 50; // 50 for 25 padding * 2
+		if (ihdr_frame_width < 0) {
+			ihdr_frame_width = 0;
+		}
+		int ihdr_frame_height = new_height - 50;
+		if (ihdr_frame_height < 0) {
+			ihdr_frame_height = 0;
+		}
+		ihdr_frame->Move(max::Containers::MakeRectangle(25, 25, ihdr_frame_width, ihdr_frame_height));
 	}
 
 
@@ -266,13 +542,13 @@ struct MainForm {
 		maxGUI::PostExitMessage(0);
 	}
 
-	maxGUI::ListBox<>* listbox_ = nullptr;
+	//maxGUI::ListBox<PNGChunksListboxBehavior>* listbox_ = nullptr;
 };
 
 
 int maxGUIEntryPoint(maxGUI::FormContainer form_container) noexcept {
 	auto form_allocator = maxGUI::GetDefaultFormAllocator<MainForm>();
-	if (!form_container.CreateForm<MainForm>(800, 600, "ImageInternals", form_allocator.get())) {
+	if (!form_container.CreateForm<MainForm>(MainForm::initial_form_width, MainForm::initial_form_height, "ImageInternals", form_allocator.get())) {
 		return -1;
 	}
 
