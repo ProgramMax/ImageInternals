@@ -1555,6 +1555,28 @@ png_write_mDCV_fixed(png_structrp png_ptr,
 }
 #endif
 
+/* Write a mARK chunk */
+void /* PRIVATE */
+png_write_mARK(png_structrp png_ptr, png_restart_markerp restart_markers,
+    png_uint_32 num_restart_markers)
+{
+   int i;
+   png_byte buf[8];
+
+   png_debug(1, "in png_write_mARK");
+
+   png_write_chunk_header(png_ptr, png_mARK, num_restart_markers * 8);
+
+   for (i = 0; i < num_restart_markers; i++)
+   {
+      png_save_uint_32(buf + 0, restart_markers[i].offset);
+      png_save_uint_32(buf + 4, restart_markers[i].row);
+      png_write_chunk_data(png_ptr, buf, 8);
+   }
+
+   png_write_chunk_end(png_ptr);
+}
+
 #ifdef PNG_WRITE_eXIf_SUPPORTED
 /* Write the Exif data */
 void /* PRIVATE */
@@ -2597,6 +2619,10 @@ png_write_find_filter(png_structrp png_ptr, png_row_infop row_info)
    png_write_filtered_row(png_ptr, png_ptr->row_buf, row_info->rowbytes+1);
 #else
    unsigned int filter_to_do = png_ptr->do_filter;
+   if (png_ptr->temporary_filter != 0) {
+      filter_to_do = png_ptr->temporary_filter;
+      png_ptr->temporary_filter = 0;
+   }
    png_bytep row_buf;
    png_bytep best_row;
    png_uint_32 bpp;
@@ -2814,10 +2840,14 @@ png_write_filtered_row(png_structrp png_ptr, png_bytep filtered_row,
 
 #ifdef PNG_WRITE_FLUSH_SUPPORTED
    png_ptr->flush_rows++;
+   png_ptr->flush_bytes_so_far += full_row_length;
 
-   if (png_ptr->flush_dist > 0 &&
+   if (png_ptr->flush_mode == 0 && png_ptr->flush_dist > 0 &&
        png_ptr->flush_rows >= png_ptr->flush_dist)
    {
+      png_write_flush(png_ptr);
+   }
+   if (png_ptr->flush_mode == 1 && png_ptr->flush_bytes_so_far >= png_ptr->flush_after_bytes) {
       png_write_flush(png_ptr);
    }
 #endif /* WRITE_FLUSH */

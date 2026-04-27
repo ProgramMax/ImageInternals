@@ -15,6 +15,8 @@
 #include <vector>
 #include <span>
 
+#include <stdio.h>
+
 #include <maxGUI/maxGUI.hpp>
 
 #include <png.h>
@@ -43,6 +45,9 @@ namespace {
 	maxGUI::TextBox<>* filter_method_textbox = nullptr;
 	maxGUI::Label* interlace_method_label = nullptr;
 	maxGUI::TextBox<>* interlace_method_textbox = nullptr;
+
+	png_bytep buffer;
+
 
 
 	void DisplaySelectedChunk(size_t chunk_index) noexcept;
@@ -292,7 +297,7 @@ void ReadPNG(char const* file_path) {
 	//image.format = PNG_FORMAT_RGBA;
 	image.format = PNG_FORMAT_FLAG_COLOR + PNG_FORMAT_FLAG_ALPHA + PNG_FORMAT_FLAG_BGR;
 
-	png_bytep buffer;
+	//png_bytep buffer;
 	buffer = (png_bytep)malloc(PNG_IMAGE_SIZE(image));
 	if (buffer == NULL) {
 		png_image_free(&image);
@@ -305,13 +310,12 @@ void ReadPNG(char const* file_path) {
 		return;
 	}
 
-
 	width = image.width;
 	height = image.height;
 	SetImageFromBuffer(window_handle, buffer, PNG_IMAGE_SIZE(image), width, height);
 
 
-	free(buffer);
+	//free(buffer);
 }
 
 struct OpenMenuBehavior {
@@ -322,7 +326,7 @@ struct OpenMenuBehavior {
 
 		ofn.lStructSize = sizeof(ofn);
 		//ofn.hwndOwner = hwnd;
-		ofn.lpstrFilter = TEXT("PNG Files (*.png)\0*.png\0All Files (*.*)\0*.*\0");
+		ofn.lpstrFilter = TEXT("PNG Files (*.png)\0*.png\0PNG Files (test decoder) (*.png)\0*.png\0All Files (*.*)\0*.*\0");
 		ofn.lpstrFile = szFileName;
 		ofn.nMaxFile = MAX_PATH;
 		ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
@@ -331,6 +335,10 @@ struct OpenMenuBehavior {
 		BOOL result = GetOpenFileName(&ofn);
 		if (result == 0) {
 			return;
+		}
+
+		DWORD filter_chosen = ofn.nFilterIndex;
+		if (filter_chosen == 2) { // We hard-coded the 2nd filter to be the test decoder (it is 1-based)
 		}
 
 		int char_count = 0;
@@ -393,6 +401,38 @@ struct OpenMenuBehavior {
 	}
 };
 
+struct custom_io_state {
+	FILE* fp;
+	int rows_per_retart; // insert a restart marker every N rows
+	int row_count;
+};
+
+void WriteToFile(png_structp png_ptr, png_bytep data, png_size_t length) {
+	custom_io_state* state = reinterpret_cast<custom_io_state*>(png_get_io_ptr(png_ptr));
+	fwrite(data, 1, length, state->fp);
+}
+
+void FlushBuffer(png_structp png_ptr) {
+}
+
+std::vector<png_byte> output_buffer;
+int y;
+std::vector<png_restart_marker> restart_markers;
+
+void WriteToBuffer(png_structp png_ptr, png_bytep data, png_size_t length) {
+	output_buffer.reserve(output_buffer.size() + length);
+	std::copy(data, data + length, std::back_inserter(output_buffer));
+}
+
+void FlushFile(png_structp png_ptr) {
+	custom_io_state* state = reinterpret_cast<custom_io_state*>(png_get_io_ptr(png_ptr));
+	fflush(state->fp);
+}
+
+void RestartMarker(png_structp png_ptr) {
+	restart_markers.emplace_back(output_buffer.size(), y);
+}
+
 struct SaveMenuBehavior {
 	static void OnPressed() noexcept {
 		OPENFILENAME ofn;
@@ -401,7 +441,7 @@ struct SaveMenuBehavior {
 
 		ofn.lStructSize = sizeof(ofn);
 		//ofn.hwndOwner = hwnd;
-		ofn.lpstrFilter = TEXT("Text Files (*.txt)\0*.txt\0All Files (*.*)\0*.*\0");
+		ofn.lpstrFilter = TEXT("PNG Files (*.png)\0*.png\0PNG Files (test encoder) (*.png)\0*.png\0All Files (*.*)\0*.*\0");
 		ofn.lpstrFile = szFileName;
 		ofn.nMaxFile = MAX_PATH;
 		ofn.Flags = OFN_EXPLORER | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT;
@@ -412,7 +452,52 @@ struct SaveMenuBehavior {
 			return;
 		}
 
-		// do something
+		bool use_test_encoder = false;
+
+		DWORD filter_chosen = ofn.nFilterIndex;
+		if (filter_chosen == 2) { // We hard-coded the 2nd filter to be the test encoder (it is 1-based)
+			use_test_encoder = true;
+		}
+
+		png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+
+		auto io_state = custom_io_state{};
+		io_state.fp = fopen("output.png", "wb"); // TODO: Use the actual file specified, don't hard-code
+		png_voidp io_ptr = reinterpret_cast<png_voidp>(&io_state);
+		png_set_write_fn(png_ptr, io_ptr, WriteToFile, FlushFile);
+
+		png_infop info_ptr = png_create_info_struct(png_ptr);
+		png_set_IHDR(png_ptr, info_ptr, width, height, 8, PNG_COLOR_TYPE_RGBA, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+		png_set_bgr(png_ptr);
+		png_write_info(png_ptr, info_ptr);
+
+
+		if (use_test_encoder) {
+			png_set_restart_marker_fn(png_ptr, RestartMarker);
+			png_set_write_fn(png_ptr, io_ptr, WriteToBuffer, FlushBuffer);
+			//png_set_flush(png_ptr, 16); // set a sync point every 16 rows
+			png_set_flush_mode(png_ptr, 1);
+			png_set_flush_after_bytes(png_ptr, 32 * 1024);
+		}
+
+		const int bytes_per_pixel = 4;
+		for (y = 0; y < height; y++) {
+			png_write_row(png_ptr, &buffer[(width * bytes_per_pixel) * y]);
+		}
+
+		if (use_test_encoder) {
+			png_set_write_fn(png_ptr, io_ptr, WriteToFile, FlushFile);
+
+			png_write_restart_markers(png_ptr, restart_markers.data(), restart_markers.size());
+
+			// flush my buffer
+			fwrite(output_buffer.data(), 1, output_buffer.size(), io_state.fp);
+		}
+
+		png_write_end(png_ptr, info_ptr);
+		fclose(io_state.fp);
+		png_destroy_write_struct(&png_ptr, &info_ptr);
+		output_buffer.resize(0);
 	}
 };
 

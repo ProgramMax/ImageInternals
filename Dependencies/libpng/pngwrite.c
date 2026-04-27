@@ -944,6 +944,8 @@ png_write_row(png_structrp png_ptr, png_const_bytep row)
    /* Find a filter if necessary, filter the row and write it out. */
    png_write_find_filter(png_ptr, &row_info);
 
+
+
    if (png_ptr->write_row_fn != NULL)
       (*(png_ptr->write_row_fn))(png_ptr, png_ptr->row_number, png_ptr->pass);
 }
@@ -974,11 +976,60 @@ png_write_flush(png_structrp png_ptr)
    if (png_ptr->row_number >= png_ptr->num_rows)
       return;
 
-   png_compress_IDAT(png_ptr, NULL, 0, Z_SYNC_FLUSH);
+   if (png_ptr->flush_mode == 0) {
+      png_compress_IDAT(png_ptr, NULL, 0, Z_SYNC_FLUSH);
+   } else if (png_ptr->flush_mode == 1) {
+      png_compress_IDAT(png_ptr, NULL, 0, Z_FULL_FLUSH);
+	  //if (png_ptr->restart_marker_locations == NULL) {
+         //png_ptr->restart_marker_locations = png_malloc(png_ptr, sizeof(png_uint_32) * 100); // TODO: Get rid of hard-coding 100
+      //}
+      //png_ptr->restart_marker_locations[png_ptr->num_restart_marker_locations] = location;
+      //png_ptr->num_restart_marker_locations++;
+      png_ptr->restart_marker_fn(png_ptr);
+   }
    png_ptr->flush_rows = 0;
+   png_ptr->flush_bytes_so_far = 0;
+   
    png_flush(png_ptr);
 }
+
+void PNGAPI
+png_set_flush_mode(png_structrp png_ptr, int mode)
+{
+   png_debug(1, "in png_set_flush_mode");
+
+   if (png_ptr == NULL)
+     return;
+
+   png_ptr->flush_mode = mode;
+   png_ptr->restart_marker_locations = NULL;
+   png_ptr->num_restart_marker_locations = 0;
+}
+
+void PNGAPI
+png_set_flush_after_bytes(png_structrp png_ptr, size_t flush_after_bytes)
+{
+   png_debug(1, "in png_set_flush_after_bytes");
+
+   if (png_ptr == NULL)
+      return;
+
+   png_ptr->flush_after_bytes = flush_after_bytes;
+   png_ptr->flush_bytes_so_far = 0;
+}
 #endif /* WRITE_FLUSH */
+
+void PNGAPI
+png_write_restart_markers(png_structrp png_ptr,
+    png_restart_markerp restart_markers, png_uint_32 num_restart_markers)
+{
+   png_debug(1, "in png_write_restart_markers");
+
+   if (png_ptr == NULL)
+      return;
+
+   png_write_mARK(png_ptr, restart_markers, num_restart_markers);
+}
 
 /* Free any memory used in png_ptr struct without freeing the struct itself. */
 static void
@@ -1162,6 +1213,7 @@ png_set_filter(png_structrp png_ptr, int method, int filters)
          }
       }
       png_ptr->do_filter = (png_byte)filters;
+      png_ptr->temporary_filter = 0;
 #endif
    }
    else

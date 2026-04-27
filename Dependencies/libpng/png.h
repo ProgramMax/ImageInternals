@@ -608,6 +608,13 @@ typedef png_time * png_timep;
 typedef const png_time * png_const_timep;
 typedef png_time * * png_timepp;
 
+typedef struct png_restart_marker_struct
+{
+   png_uint_32 offset;
+   png_uint_32 row;
+} png_restart_marker;
+typedef png_restart_marker * png_restart_markerp;
+
 #if defined(PNG_STORE_UNKNOWN_CHUNKS_SUPPORTED) ||\
    defined(PNG_USER_CHUNKS_SUPPORTED)
 /* png_unknown_chunk is a structure to hold queued chunks for which there is
@@ -1371,6 +1378,8 @@ PNG_FIXED_EXPORT(208, void, png_set_gamma_fixed, (png_structrp png_ptr,
 PNG_EXPORT(51, void, png_set_flush, (png_structrp png_ptr, int nrows));
 /* Flush the current PNG output buffer */
 PNG_EXPORT(52, void, png_write_flush, (png_structrp png_ptr));
+PNG_EXPORT(1000, void, png_set_flush_mode, (png_structrp png_ptr, int mode));
+PNG_EXPORT(1001, void, png_set_flush_after_bytes, (png_structrp png_ptr, size_t flush_after_bytes));
 #endif
 
 /* Optional update palette with requested transformations */
@@ -1411,6 +1420,9 @@ PNG_EXPORT(59, void, png_write_rows, (png_structrp png_ptr, png_bytepp row,
 
 /* Write the image data */
 PNG_EXPORT(60, void, png_write_image, (png_structrp png_ptr, png_bytepp image));
+
+PNG_EXPORT(1003, void, png_write_restart_markers, (png_structrp png_ptr,
+	png_restart_markerp restart_markers, png_uint_32 num_restart_markers));
 
 /* Write the end of the PNG file. */
 PNG_EXPORT(61, void, png_write_end, (png_structrp png_ptr,
@@ -1599,6 +1611,9 @@ PNG_EXPORT(76, png_voidp, png_get_error_ptr, (png_const_structrp png_ptr));
  */
 PNG_EXPORT(77, void, png_set_write_fn, (png_structrp png_ptr, png_voidp io_ptr,
     png_rw_ptr write_data_fn, png_flush_ptr output_flush_fn));
+
+PNG_EXPORT(1002, void, png_set_restart_marker_fn, (png_structrp png_ptr,
+    png_flush_ptr restart_marker_fn));
 
 /* Replace the default data input function with a user supplied one. */
 PNG_EXPORT(78, void, png_set_read_fn, (png_structrp png_ptr, png_voidp io_ptr,

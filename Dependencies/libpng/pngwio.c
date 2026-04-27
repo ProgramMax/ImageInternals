@@ -164,4 +164,14 @@ png_set_write_fn(png_structrp png_ptr, png_voidp io_ptr,
    }
 #endif
 }
+
+void PNGAPI
+png_set_restart_marker_fn(png_structrp png_ptr,
+    png_flush_ptr restart_marker_fn)
+{
+   if(png_ptr == NULL)
+      return;
+
+   png_ptr->restart_marker_fn = restart_marker_fn;
+}
 #endif /* WRITE */

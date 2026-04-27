@@ -870,6 +870,7 @@
 #define png_hIST PNG_U32(104,  73,  83,  84)
 #define png_iCCP PNG_U32(105,  67,  67,  80)
 #define png_iTXt PNG_U32(105,  84,  88, 116)
+#define png_mARK PNG_U32(109,  65,  82,  75)
 #define png_mDCV PNG_U32(109,  68,  67,  86) /* PNGv3 */
 #define png_oFFs PNG_U32(111,  70,  70, 115)
 #define png_pCAL PNG_U32(112,  67,  65,  76)
